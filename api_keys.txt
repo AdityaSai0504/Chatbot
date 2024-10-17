@@ -1,0 +1,15 @@
+openai-api  -  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
+
+
+
+conversational-api(wolfram) - 8KLVPT-56K3VWLR8T
+
+instant calculator-api(wolfram) - 8KLVPT-Q66AEW22U9
+
+short answers-api(wolfram) - 8KLVPT-WVRWKPRX6T
+
+show_steps-api(wolfram) - 8KLVPT-8EAQ4UPKH3
+
+witai-api - SDE4C7U6GI2NQ7LQKZYQFLUGB6DODMXJ
+
+foursquare-api - fsq3JzRFpubCHA54Lu0lL5eVh1Adu9t7K0BeM7DiJiqsGig=

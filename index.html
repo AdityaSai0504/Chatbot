@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        html, body {
+			height: 100%;
+			margin: 0;
+			font-family: Arial, sans-serif;
+			background-color: #ffffff; /* White background for the entire page */
+		}
+
+		body {
+			background-color: #ffffff; /* Dark background color */
+			color: #ffffff; /* White text color */
+		}
+
+		#sidebar {
+			background-color: #a39f9e; /* #495057 Slightly lighter dark background for sidebar */
+			height: 100vh;
+			width: 220px; /* Adjust width of sidebar as needed */
+			float: left;
+			position: fixed;
+			top: 0px;
+			left: -250px; /* Initially hidden */
+            transition: left 0.3s ease; /* Smooth transition for opening/closing */
+            z-index: 1000;
+		}
+		 #sidebar.open {
+            left: 0; /* When the sidebar is open */
+        }
+		#sidebar-toggle {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1001; /* Ensure button stays on top */
+			color: #000000;
+        }
+		#main-content {
+			margin-left: 20px; /* Ensure main content starts after the sidebar */
+			background-color: #ffffff; /* White background for main content */
+			transition: margin-left 0.3s ease;
+				
+		}
+
+		h1 {
+			color: #ffffff;
+		}
+
+		#chatbox {
+			border: none; /* Lighter border color */
+			border-radius: 10px;
+			padding: 10px;
+			height: 555px;
+			overflow-y: auto;
+			background-color: #ffffff; /* White background for chatbox */
+			color: #000000; /* Black text color in chatbox */
+			margin-bottom: 15px;
+			margin-left: 80px;
+			max-width: 850px; /* Set a maximum width */
+			width: 100%; /* Make it responsive to the available width */
+			
+		}
+		#main-content.open {
+            margin-left: 225px; /* Shift content to the right when sidebar is open */
+        }
+		
+
+		#userInput {
+			border-radius: 20px;
+			max-width: 860px; /* Set a maximum width */
+			margin-left: 20px;
+			
+			width: 100%; /* Make it responsive to the available width */
+		}
+		.input-container {
+			position: relative;
+			max-width: 820px; /* Limit the max width */
+			width: 100%; /* Make it responsive */
+			margin: 0 auto; /* Center the input */
+		}
+		.message {
+			margin-bottom: 10px;
+		}
+
+		.message.user {
+			text-align: right;
+			color: black; /* User messages color */
+		}
+
+		.message.bot {
+			text-align: left;
+			color: #807b7a; /* Bot messages color */
+		}
+		
+
+        
+		.input-container {
+            position: relative; /* To position the icon inside the input */
+            max-width: 820px; /* Match the width of the input container to the chatbox */
+			
+        }
+
+        
+		.send-icon {
+            position: absolute;
+            top: 50%;
+            right: -10px; /* Position icon inside the input */
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #007bff; /* Icon color */
+            font-size: 30px;
+        }
+
+        .send-icon:hover {
+            color: #0056b3; /* Darker color on hover */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div id="sidebar" class="col-md-2 p-3 open">
+                <h2 class="text-white">ASbot</h2>
+                <p class="text-white">Your friendly chatbot</p>
+            </div>
+			<!-- Sidebar toggle button (hamburger icon) -->
+			<i id="sidebar-toggle" class="fas fa-window-maximize" onclick="toggleSidebar()"></i>
+            <!-- Main content -->
+            <div id="main-content" class="col-md-10 p-3 open">
+                
+                <div id="chatbox" class="mb-3"></div>
+                <div class="input-container">
+                    <input type="text" id="userInput" class="form-control" placeholder="Message ASbot">
+                    <div class="input-group-append">
+                        <i class="fas fa-arrow-circle-up send-icon" onclick="sendMessage()"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+			// Function to toggle the sidebar visibility
+        function toggleSidebar() {
+			const sidebar = document.getElementById('sidebar');
+			const mainContent = document.getElementById('main-content');
+			sidebar.classList.toggle('open');
+			mainContent.classList.toggle('open');
+		}
+
+        async function sendMessage() {
+            const message = document.getElementById('userInput').value;
+            const response = await fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: message })
+            });
+            const result = await response.json();
+            
+            // Add user message
+            document.getElementById('chatbox').innerHTML += `
+                <div class="message user">
+                    <strong>You:</strong> ${message}
+                </div>
+            `;
+            
+            // Add bot response
+            document.getElementById('chatbox').innerHTML += `
+                <div class="message bot">
+				<i class="fas fa-robot"></i> ${result.response}
+				</div>
+            `;
+            
+            // Scroll to the bottom
+            document.getElementById('chatbox').scrollTop = document.getElementById('chatbox').scrollHeight;
+            
+            // Clear input field
+            document.getElementById('userInput').value = '';
+        }
+    </script>
+</body>
+</html>
