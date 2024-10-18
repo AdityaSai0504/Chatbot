@@ -29,24 +29,23 @@ logger = logging.getLogger(__name__)
 logger.debug('Initializing external APIs...')
 
 # WolframAlpha clients
-wolfram_math_client = wolframalpha.Client('8KLVPT-Q66AEW22U9')  # Replace with your math API key
-wolfram_convo_client = wolframalpha.Client('8KLVPT-56K3VWLR8T')  # Replace with your conversational API key
-wolfram_ShortAnswers_client = wolframalpha.Client('8KLVPT-WVRWKPRX6T')  # Replace with your ShortAnswers API key
-wolfram_steps_client = wolframalpha.Client('8KLVPT-8EAQ4UPKH3')  # Replace with your Show steps API key
+wolfram_math_client = wolframalpha.Client('#your key')  # Replace with your math API key
+wolfram_convo_client = wolframalpha.Client('#your key')  # Replace with your conversational API key
+wolfram_ShortAnswers_client = wolframalpha.Client('#your key')  # Replace with your ShortAnswers API key
+wolfram_steps_client = wolframalpha.Client('#your key')  # Replace with your Show steps API key
 # Initialize OpenAI API
-#openai.api_key = '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'  # Replace with your OpenAI API key
-
+#openai.api_key = '#your key'
 # Wit.ai token
-WIT_AI_TOKEN = 'SDE4C7U6GI2NQ7LQKZYQFLUGB6DODMXJ'  # Replace with your Wit.ai server access token
+WIT_AI_TOKEN = ''#your key''  # Replace with your Wit.ai server access token
 
 # RapidAPI for recipes (Spoonacular)
 # Spoonacular API
-SPOONACULAR_API_KEY = 'e29abc4d4amshd5f7831e5c98832p190e62jsn3d1bd923feee'
-SPOONACULAR_SEARCH_URL = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch"
-SPOONACULAR_RECIPE_URL = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/{id}/information"
+SPOONACULAR_API_KEY = '#your key'
+SPOONACULAR_SEARCH_URL = 
+SPOONACULAR_RECIPE_URL = 
 
 # Foursquare API Key
-FOURSQUARE_API_KEY = 'fsq3JzRFpubCHA54Lu0lL5eVh1Adu9t7K0BeM7DiJiqsGig='  # Replace with your Foursquare API key
+FOURSQUARE_API_KEY = '#your key'  # Replace with your Foursquare API key
 
 # Create a new ChatBot instance (you can keep this if you want to use ChatterBot for fallback)
 chatbot = ChatBot(
@@ -75,7 +74,7 @@ def handle_math_and_factual_query(user_input):
 def handle_conversational_query(user_input):
     logger.info("I am above headers")
     headers = {
-        'Authorization': 'Bearer SDE4C7U6GI2NQ7LQKZYQFLUGB6DODMXJ',  # API key as a string
+        'Authorization': 'Bearer '#your key',  # API key as a string
         'Content-Type': 'application/json'
     }
 
